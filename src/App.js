@@ -1,9 +1,11 @@
 import React from "react";
-import Vote from "./components/Vote.jsx";
+import Title from "./components/Title";
+import Vote from "./components/Vote";
 
 function App() {
   return (
     <div className="App">
+      <Title />
       <Vote />
     </div>
   );

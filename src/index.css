@@ -1,6 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'bakwan';
+  src: url('./assets/fonts/Good Bakwan.otf') format('opentype');
+}
+
+body {
+  font-family: 'bakwan', sans-serif;
+}
+
+/* Apply Montserrat to serious text elements */
+.normal-font {
+  font-family: 'Montserrat', sans-serif;
+}
 
 @keyframes float1 {
   0% {

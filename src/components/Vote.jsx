@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./Vote.css"; // Import the CSS file
 
 const Vote = () => {
   const [hasVoted, setHasVoted] = useState(false);
@@ -52,9 +53,6 @@ const Vote = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <h1 className="text-5xl font-bold mb-8 text-center">
-        Waffles OR Pancakes?
-      </h1>
       <div className="relative flex justify-center items-center h-64 w-full">
         <div className="relative flex items-center space-x-8">
           <div className="flex flex-col items-center floating1">
