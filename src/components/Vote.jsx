@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./Vote.css"; // Import the CSS file
 
 const Vote = () => {
   const [hasVoted, setHasVoted] = useState(false);
