@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes float1 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(10px, -5px) rotate(5deg);
+  }
+  40% {
+    transform: translate(-10px, 10px) rotate(-5deg);
+  }
+  60% {
+    transform: translate(10px, 10px) rotate(3deg);
+  }
+  80% {
+    transform: translate(-10px, -10px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes float2 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(-5px, 2.5px) rotate(-2deg);
+  }
+  40% {
+    transform: translate(5px, -5px) rotate(2deg);
+  }
+  60% {
+    transform: translate(-5px, -5px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(5px, 5px) rotate(1deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+@keyframes float3 {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  20% {
+    transform: translate(5px, 10px) rotate(3deg);
+  }
+  40% {
+    transform: translate(-5px, -10px) rotate(-5deg);
+  }
+  60% {
+    transform: translate(10px, 5px) rotate(5deg);
+  }
+  80% {
+    transform: translate(-10px, -5px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+}
+
+.floating1 {
+  animation: float1 4.2s ease-in-out infinite;
+  animation-delay: 0.1s;
+}
+
+.floating2 {
+  animation: float2 6s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.floating3 {
+  animation: float3 4.8s ease-in-out infinite;
+  animation-delay: 0.3s;
+}

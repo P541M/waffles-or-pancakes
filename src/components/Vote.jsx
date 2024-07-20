@@ -51,30 +51,37 @@ const Vote = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-4xl mb-4">Vote for Your Favorite</h1>
-      <div className="flex space-x-4 mb-4">
-        <button
-          onClick={() => handleVote("Waffles")}
-          className="px-4 py-2 bg-blue-500 text-white rounded"
-          disabled={hasVoted}
-        >
-          Waffles
-        </button>
-        <button
-          onClick={() => handleVote("Pancakes")}
-          className="px-4 py-2 bg-yellow-500 text-white rounded"
-          disabled={hasVoted}
-        >
-          Pancakes
-        </button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-5xl font-bold mb-8 text-center">
+        Waffles OR Pancakes?
+      </h1>
+      <div className="relative flex justify-center items-center h-64 w-full">
+        <div className="relative flex items-center space-x-8">
+          <div className="flex flex-col items-center floating1">
+            <button
+              onClick={() => handleVote("Waffles")}
+              className="px-6 py-3 bg-blue-500 text-white rounded-lg text-2xl"
+              disabled={hasVoted}
+            >
+              Waffles
+            </button>
+            <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
+          </div>
+          <div className="text-6xl floating2">🍽️</div>{" "}
+          {/* Character in between */}
+          <div className="flex flex-col items-center floating3">
+            <button
+              onClick={() => handleVote("Pancakes")}
+              className="px-6 py-3 bg-yellow-500 text-white rounded-lg text-2xl"
+              disabled={hasVoted}
+            >
+              Pancakes
+            </button>
+            <p className="mt-2 text-2xl">Pancakers: {votes.Pancakes}</p>
+          </div>
+        </div>
       </div>
-      {hasVoted && <p className="mt-4">Thank you for voting!</p>}
-      <div className="mt-8">
-        <h2 className="text-2xl mb-2">Current Votes:</h2>
-        <p>Waffles: {votes.Waffles}</p>
-        <p>Pancakes: {votes.Pancakes}</p>
-      </div>
+      {hasVoted && <p className="mt-4 text-xl">Thank you for voting!</p>}
       {/* Temporary reset buttons */}
       <button
         onClick={resetVote}
