@@ -2,13 +2,13 @@ import React from "react";
 
 const Title = () => {
   return (
-    <div className="text-center mt-8 mb-4">
+    <div className="mb-4 mt-8 text-center">
       <h1 className="text-5xl font-bold tracking-wide">
         WAFFLES OR PANCAKES?!1!11
       </h1>
-      <div className="flex justify-center items-center mt-2 space-x-2">
+      <div className="mt-2 flex items-center justify-center space-x-2">
         <p className="text-xl">Choose wisely...</p>
-        <p className="text-sm normal-font">(i'm srs, this can be canon)</p>
+        <p className="normal-font text-sm">(i'm srs, this can be canon)</p>
       </div>
     </div>
   );

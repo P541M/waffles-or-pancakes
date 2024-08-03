@@ -51,25 +51,24 @@ const Vote = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="relative flex justify-center items-center h-64 w-full">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
+      <div className="relative flex h-64 w-full items-center justify-center">
         <div className="relative flex items-center space-x-8">
-          <div className="flex flex-col items-center floating1">
+          <div className="flex flex-col items-center">
             <button
               onClick={() => handleVote("Waffles")}
-              className="px-6 py-3 bg-blue-500 text-white rounded-lg text-2xl"
+              className="rounded-lg bg-blue-500 px-6 py-3 text-2xl text-white"
               disabled={hasVoted}
             >
               Waffles
             </button>
             <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
           </div>
-          <div className="text-6xl floating2">🍽️</div>{" "}
-          {/* Character in between */}
-          <div className="flex flex-col items-center floating3">
+          <div className="text-6xl">🍽️</div> {/* Character in between */}
+          <div className="flex flex-col items-center">
             <button
               onClick={() => handleVote("Pancakes")}
-              className="px-6 py-3 bg-yellow-500 text-white rounded-lg text-2xl"
+              className="rounded-lg bg-yellow-500 px-6 py-3 text-2xl text-white"
               disabled={hasVoted}
             >
               Pancakes
@@ -82,13 +81,13 @@ const Vote = () => {
       {/* Temporary reset buttons */}
       <button
         onClick={resetVote}
-        className="px-4 py-2 bg-red-500 text-white rounded mt-4"
+        className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
       >
         Reset Vote
       </button>
       <button
         onClick={resetCounter}
-        className="px-4 py-2 bg-red-500 text-white rounded mt-4"
+        className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
       >
         Reset Counter
       </button>
