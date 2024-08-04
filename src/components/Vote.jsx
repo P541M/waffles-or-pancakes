@@ -116,6 +116,8 @@ const Vote = () => {
       {switchMessage && (
         <p className="mt-4 text-xl text-red-500">{switchMessage}</p>
       )}
+
+      {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
       <button
         onClick={resetVote}
