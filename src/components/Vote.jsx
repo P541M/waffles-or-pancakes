@@ -62,7 +62,7 @@ const Vote = () => {
             >
               Waffles
             </button>
-            <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
+            <p className="mt-2 text-2xl">Waffles: {votes.Waffles}</p>
           </div>
           <div className="text-6xl">🍽️</div> {/* Character in between */}
           <div className="flex flex-col items-center">
@@ -73,7 +73,7 @@ const Vote = () => {
             >
               Pancakes
             </button>
-            <p className="mt-2 text-2xl">Pancakers: {votes.Pancakes}</p>
+            <p className="mt-2 text-2xl">Pancakes: {votes.Pancakes}</p>
           </div>
         </div>
       </div>
