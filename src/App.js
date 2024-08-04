@@ -5,7 +5,9 @@ import Vote from "./components/Vote";
 function App() {
   return (
     <div className="App">
+      {/* Display Title */}
       <Title />
+      {/* Display Vote Section */}
       <Vote />
     </div>
   );

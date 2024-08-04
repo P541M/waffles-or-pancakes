@@ -38,6 +38,7 @@ const Vote = () => {
     }
   };
 
+  // Generate a random switch message
   const getRandomSwitchMessage = (from, to) => {
     const messages = [
       `WHAT?! You switched from ${from} to ${to}!`,
@@ -49,6 +50,7 @@ const Vote = () => {
     return messages[Math.floor(Math.random() * messages.length)];
   };
 
+  // Handle user voting
   const handleVote = async (choice) => {
     const userId = localStorage.getItem("userId");
     try {
@@ -63,12 +65,14 @@ const Vote = () => {
     }
   };
 
+  // Reset user's vote
   const resetVote = () => {
     localStorage.removeItem("userId");
     setUserVote(null);
     setSwitchMessage("");
   };
 
+  // Reset all votes
   const resetCounter = async () => {
     try {
       await axios.post("http://localhost:5000/reset");
@@ -80,8 +84,10 @@ const Vote = () => {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 p-4">
+      {/* Voting Section */}
       <div className="relative flex h-64 w-full items-center justify-center">
         <div className="relative flex items-center space-x-8">
+          {/* Waffles Vote Button */}
           <div className="flex flex-col items-center">
             <button
               onClick={() => handleVote("Waffles")}
@@ -92,6 +98,7 @@ const Vote = () => {
             <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
           </div>
           <div className="text-6xl">🍽️</div> {/* Character in between */}
+          {/* Pancakes Vote Button */}
           <div className="flex flex-col items-center">
             <button
               onClick={() => handleVote("Pancakes")}
@@ -103,16 +110,20 @@ const Vote = () => {
           </div>
         </div>
       </div>
+      {/* Display user's vote */}
       {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>}
+      {/* Display switch message */}
       {switchMessage && (
         <p className="mt-4 text-xl text-red-500">{switchMessage}</p>
       )}
+      {/* Reset Vote Button */}
       <button
         onClick={resetVote}
         className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
       >
         Reset Vote
       </button>
+      {/* Reset Counter Button */}
       <button
         onClick={resetCounter}
         className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
