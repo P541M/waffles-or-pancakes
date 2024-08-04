@@ -4,8 +4,8 @@ Waffles or Pancakes is a unique React.js web application that presents users wit
 
 ## Contributors
 
-- Backend Development & Frontend Development: Psalm Eleazar G. Videna
-- Concept Art, Design & Frontend Development: [Emily Chang](https://github.com/milychang19)
+- Backend Development & Frontend Framework: Psalm Eleazar G. Videna
+- Concept Art, Design & Frontend Design: [Emily Chang](https://github.com/milychang19)
 
 ## Let’s Get in Touch!
 
