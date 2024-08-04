@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
 
 const Vote = () => {
-  const [hasVoted, setHasVoted] = useState(false);
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
+  const [userVote, setUserVote] = useState(null); // Track the user's vote
+  const [switchMessage, setSwitchMessage] = useState("");
 
   useEffect(() => {
-    const userVoted = localStorage.getItem("hasVoted");
-    if (userVoted) {
-      setHasVoted(true);
+    const storedUserId = localStorage.getItem("userId");
+    if (!storedUserId) {
+      const userId = uuidv4();
+      localStorage.setItem("userId", userId);
     }
-
     fetchVotes();
+    fetchUserVote();
   }, []);
 
   const fetchVotes = async () => {
@@ -23,13 +26,37 @@ const Vote = () => {
     }
   };
 
-  const handleVote = async (choice) => {
-    if (hasVoted) return;
-
+  const fetchUserVote = async () => {
+    const userId = localStorage.getItem("userId");
     try {
-      await axios.post("http://localhost:5000/vote", { vote: choice });
-      localStorage.setItem("hasVoted", "true");
-      setHasVoted(true);
+      const response = await axios.get(
+        `http://localhost:5000/userVote/${userId}`,
+      );
+      setUserVote(response.data.vote);
+    } catch (error) {
+      console.error("Error fetching user vote", error);
+    }
+  };
+
+  const getRandomSwitchMessage = (from, to) => {
+    const messages = [
+      `WHAT?! You switched from ${from} to ${to}!`,
+      `Oh no! Betrayed ${from} for ${to}!`,
+      `Switched from ${from} to ${to}? Bold move!`,
+      `Goodbye ${from}, hello ${to}!`,
+      `${from} was yesterday, today it's ${to}!`,
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
+
+  const handleVote = async (choice) => {
+    const userId = localStorage.getItem("userId");
+    try {
+      await axios.post("http://localhost:5000/vote", { userId, vote: choice });
+      if (userVote && userVote !== choice) {
+        setSwitchMessage(getRandomSwitchMessage(userVote, choice));
+      }
+      setUserVote(choice);
       fetchVotes(); // Update the votes after voting
     } catch (error) {
       console.error("Error submitting vote", error);
@@ -37,8 +64,9 @@ const Vote = () => {
   };
 
   const resetVote = () => {
-    localStorage.removeItem("hasVoted");
-    setHasVoted(false);
+    localStorage.removeItem("userId");
+    setUserVote(null);
+    setSwitchMessage("");
   };
 
   const resetCounter = async () => {
@@ -58,27 +86,27 @@ const Vote = () => {
             <button
               onClick={() => handleVote("Waffles")}
               className="rounded-lg bg-blue-500 px-6 py-3 text-2xl text-white"
-              disabled={hasVoted}
             >
               Waffles
             </button>
-            <p className="mt-2 text-2xl">Waffles: {votes.Waffles}</p>
+            <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
           </div>
           <div className="text-6xl">🍽️</div> {/* Character in between */}
           <div className="flex flex-col items-center">
             <button
               onClick={() => handleVote("Pancakes")}
               className="rounded-lg bg-yellow-500 px-6 py-3 text-2xl text-white"
-              disabled={hasVoted}
             >
               Pancakes
             </button>
-            <p className="mt-2 text-2xl">Pancakes: {votes.Pancakes}</p>
+            <p className="mt-2 text-2xl">Pancakers: {votes.Pancakes}</p>
           </div>
         </div>
       </div>
-      {hasVoted && <p className="mt-4 text-xl">Thank you for voting!</p>}
-      {/* Temporary reset buttons */}
+      {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>}
+      {switchMessage && (
+        <p className="mt-4 text-xl text-red-500">{switchMessage}</p>
+      )}
       <button
         onClick={resetVote}
         className="mt-4 rounded bg-red-500 px-4 py-2 text-white"
