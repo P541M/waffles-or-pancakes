@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
-import avatar from "../assets/characters/naked.png"
+import avatar from "../assets/characters/naked.png";
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
@@ -84,56 +84,63 @@ const Vote = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center justify-items-center bg-sage p-4">
+    <section className="flex flex-col min-h-screen justify-center items-center  bg-sage">
+      {/* Display Switch Message */}
+      <div className="h-4">
+        {switchMessage && (
+          <p className="mt-4 font-sub text-xl text-blue">{switchMessage}</p>
+        )}
+      </div>
+
       {/* Voting Section */}
-      <div className="relative flex h-64 w-full items-center justify-center">
-        <div className="relative flex items-center space-x-8">
-          {/* Waffles Vote Button */}
-          <div className="flex flex-col items-center">
-            <button
-              onClick={() => handleVote("Waffles")}
-              className="rounded-lg p-0 text-7xl text-blue font-main border-blue hover:text-blue"
-            >
-              WAFFLES
-            </button>
-            <p className="mt-2 text-2xl">Wafflers: {votes.Waffles}</p>
-          </div>
-          <div className="flex items-center"><img src={avatar} alt=""></img></div> {/* Character in between */}
-          {/* Pancakes Vote Button */}
-          <div className="flex flex-col">
-            <button
-              onClick={() => handleVote("Pancakes")}
-              className="rounded-lg p-0 text-7xl text-blue font-main"
-            >
-              PANCAKES
-            </button>
-            <p className="mt-2 text-2xl">Pancakers: {votes.Pancakes}</p>
-          </div>
+      <div className="flex relative w-full items-center justify-center space-x-10">
+        {/* Waffles Vote Button */}
+        <div className="flex items-center justify-center w-64">   
+          <button
+            onClick={() => handleVote("Waffles")}
+            className="font-main text-transparent text-6xl text-stroke-3 text-stroke-blue hover:text-blue"
+          >
+            WAFFLES
+          </button>
+          {userVote && <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>}
+        </div>
+        {/* The Character */}
+        <div className="flex items-center justify-center z-10">
+          <img src={avatar} alt="" className="h-80 object-contain"></img>
+        </div>
+        {/* Pancakes Vote Button */}
+        <div className="flex items-center justify-center w-64">
+          <button
+            onClick={() => handleVote("Pancakes")}
+            className="font-main text-transparent text-6xl text-stroke-3 text-stroke-blue hover:text-blue"
+          >
+            PANCAKES
+          </button>
+          {userVote && <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>}
         </div>
       </div>
       {/* Display user's vote */}
-      {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>}
-      {/* Display switch message */}
-      {switchMessage && (
-        <p className="mt-4 text-xl text-blue">{switchMessage}</p>
-      )}
-
+      {/* {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>} */}
+      
+      <div>
+        <button className="rounded-full px-7 py-2 tracking-wider text-sage bg-blue font-main">VOTE</button>
+      </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
       <button
         onClick={resetVote}
-        className="m-2 rounded bg-yellow px-4 py-2 text-blue"
+        className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Vote
       </button>
       {/* Reset Counter Button */}
       <button
         onClick={resetCounter}
-        className="m-2 rounded bg-yellow px-4 py-2 text-blue"
+        className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Counter
       </button>
-    </div>
+    </section>
   );
 };
 
