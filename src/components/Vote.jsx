@@ -11,6 +11,7 @@ const Vote = () => {
   const [switchMessage, setSwitchMessage] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
 
+  // Fetch votes and user vote on component mount
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     if (!storedUserId) {
@@ -21,6 +22,7 @@ const Vote = () => {
     fetchUserVote();
   }, []);
 
+  // Fetch current vote counts from the server
   const fetchVotes = async () => {
     try {
       const response = await axios.get("http://localhost:5000/votes");
@@ -30,6 +32,7 @@ const Vote = () => {
     }
   };
 
+  // Fetch the user's vote from the server
   const fetchUserVote = async () => {
     const userId = localStorage.getItem("userId");
     try {
@@ -38,7 +41,12 @@ const Vote = () => {
       );
       setUserVote(response.data.vote);
     } catch (error) {
-      console.error("Error fetching user vote", error);
+      if (error.response && error.response.status === 404) {
+        // Handle the case where the user vote is not found
+        setUserVote(null);
+      } else {
+        console.error("Error fetching user vote", error);
+      }
     }
   };
 
@@ -92,7 +100,7 @@ const Vote = () => {
   };
 
   return (
-    <section className="flex flex-col min-h-screen justify-center items-center  bg-sage">
+    <section className="flex min-h-screen flex-col items-center justify-center bg-sage">
       {/* Display Switch Message */}
       <div className="h-4">
         {switchMessage && (
@@ -101,55 +109,66 @@ const Vote = () => {
       </div>
 
       {/* Voting Section */}
-      <div className="flex relative w-full items-center justify-center space-x-10">
+      <div className="relative flex w-full items-center justify-center space-x-10">
         {/* Waffles Vote Button */}
-        <div className="flex flex-col items-center justify-center w-64">   
+        <div className="flex w-64 flex-col items-center justify-center">
           <button
             onClick={() => handleOptionClick("Waffles")}
             className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
-              selectedOption === 'Waffles' ? 'text-blue': 'text-transparent' }`}
+              selectedOption === "Waffles" ? "text-blue" : "text-transparent"
+            }`}
           >
             WAFFLES
           </button>
           <div className="h-1">
-            {userVote && <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>}
+            {userVote && (
+              <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>
+            )}
           </div>
         </div>
         {/* The Character */}
-        <div className="flex items-center justify-center z-10">
-          <img 
+        <div className="z-10 flex items-center justify-center">
+          <img
             src={
-            selectedOption === 'Pancakes' ? pancake :
-            selectedOption === 'Waffles' ? waffle : avatar
+              selectedOption === "Pancakes"
+                ? pancake
+                : selectedOption === "Waffles"
+                  ? waffle
+                  : avatar
             }
-            alt="" 
-            className="h-80 object-contain"></img>
+            alt=""
+            className="h-80 object-contain"
+          ></img>
         </div>
         {/* Pancakes Vote Button */}
-        <div className="flex items-center justify-center w-64">
+        <div className="flex w-64 items-center justify-center">
           <button
             onClick={() => handleOptionClick("Pancakes")}
             className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
-              selectedOption === 'Pancakes' ? 'text-blue': 'text-transparent' }`}
+              selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
+            }`}
           >
             PANCAKES
           </button>
           <div className="h-1">
-            {userVote && <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>}
+            {userVote && (
+              <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>
+            )}
           </div>
         </div>
       </div>
       {/* Display user's vote */}
       {/* {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>} */}
-      
+
       <div className="h-[40px]">
-        {selectedOption &&
-        <button 
-          onClick={()=> handleVote({selectedOption})}
-          className="rounded-full px-7 py-2 tracking-wider text-sage bg-blue font-main"
-        >
-          VOTE
-        </button>}
+        {selectedOption && (
+          <button
+            onClick={() => handleVote(selectedOption)}
+            className="rounded-full bg-blue px-7 py-2 font-main tracking-wider text-sage"
+          >
+            VOTE
+          </button>
+        )}
       </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
