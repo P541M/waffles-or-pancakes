@@ -137,7 +137,7 @@ const Vote = () => {
         );
         setTimeout(() => {
           setDisplayedImage(avatar);
-        }, 12); // Display skewed avatar for 12 milliseconds
+        }, 20); // Display skewed avatar for 20 milliseconds
         setSelectedOption(null);
         setSwitchMessage("");
       }
@@ -150,21 +150,23 @@ const Vote = () => {
   }, [selectedOption]);
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center bg-sage">
+    <section className="flex min-h-screen flex-col items-center justify-center bg-sage p-4 md:p-8 lg:p-16">
       {/* Display Switch Message */}
-      <div className="h-4">
+      <div className="mb-4 h-4 md:mb-8 lg:mb-12">
         {switchMessage && (
-          <p className="font-sub text-xl text-blue">{switchMessage}</p>
+          <p className="px-4 text-center font-sub text-xl text-blue">
+            {switchMessage}
+          </p>
         )}
       </div>
 
       {/* Voting Section */}
-      <div className="relative flex w-full items-center justify-center space-x-10">
+      <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
         {/* Waffles Vote Button */}
-        <div className="flex w-64 flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center md:w-64">
           <button
             onClick={() => handleOptionClick("Waffles")}
-            className={`option-button font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+            className={`option-button font-main text-3xl text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
               selectedOption === "Waffles" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -172,11 +174,13 @@ const Vote = () => {
           </button>
           {/* Display Waffles vote count */}
           <div className="mt-2">
-            <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>
+            <p className="font-main text-xl text-blue md:text-2xl">
+              Wafflers: {votes.Waffles}
+            </p>
           </div>
         </div>
         {/* The Character */}
-        <div className="relative flex h-80 w-80 items-center justify-center">
+        <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
           <img
             src={displayedImage}
             alt=""
@@ -184,10 +188,10 @@ const Vote = () => {
           ></img>
         </div>
         {/* Pancakes Vote Button */}
-        <div className="flex w-64 flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center md:w-64">
           <button
             onClick={() => handleOptionClick("Pancakes")}
-            className={`option-button font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+            className={`option-button font-main text-3xl text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
               selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -195,16 +199,18 @@ const Vote = () => {
           </button>
           {/* Display Pancakes vote count */}
           <div className="mt-2">
-            <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>
+            <p className="font-main text-xl text-blue md:text-2xl">
+              Pancakers: {votes.Pancakes}
+            </p>
           </div>
         </div>
       </div>
 
-      <div className="h-[40px]">
+      <div className="mt-6 h-[40px] md:mt-10">
         {selectedOption && (
           <button
             onClick={() => handleVote(selectedOption)}
-            className="vote-button rounded-full bg-blue px-7 py-2 font-main tracking-wider text-sage"
+            className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
           >
             VOTE
           </button>
