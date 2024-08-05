@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
 import avatar from "../assets/characters/naked.png";
+import pancake from "../assets/characters/pancakes.png";
+import waffle from "../assets/characters/waffles.png";
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
   const [userVote, setUserVote] = useState(null); // Track the user's vote
   const [switchMessage, setSwitchMessage] = useState("");
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -49,6 +52,11 @@ const Vote = () => {
       `${from} was yesterday, today it's ${to}!`,
     ];
     return messages[Math.floor(Math.random() * messages.length)];
+  };
+
+  // Handle user selection
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
   };
 
   // Handle user voting
@@ -95,35 +103,53 @@ const Vote = () => {
       {/* Voting Section */}
       <div className="flex relative w-full items-center justify-center space-x-10">
         {/* Waffles Vote Button */}
-        <div className="flex items-center justify-center w-64">   
+        <div className="flex flex-col items-center justify-center w-64">   
           <button
-            onClick={() => handleVote("Waffles")}
-            className="font-main text-transparent text-6xl text-stroke-3 text-stroke-blue hover:text-blue"
+            onClick={() => handleOptionClick("Waffles")}
+            className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+              selectedOption === 'Waffles' ? 'text-blue': 'text-transparent' }`}
           >
             WAFFLES
           </button>
-          {userVote && <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>}
+          <div className="h-1">
+            {userVote && <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>}
+          </div>
         </div>
         {/* The Character */}
         <div className="flex items-center justify-center z-10">
-          <img src={avatar} alt="" className="h-80 object-contain"></img>
+          <img 
+            src={
+            selectedOption === 'Pancakes' ? pancake :
+            selectedOption === 'Waffles' ? waffle : avatar
+            }
+            alt="" 
+            className="h-80 object-contain"></img>
         </div>
         {/* Pancakes Vote Button */}
         <div className="flex items-center justify-center w-64">
           <button
-            onClick={() => handleVote("Pancakes")}
-            className="font-main text-transparent text-6xl text-stroke-3 text-stroke-blue hover:text-blue"
+            onClick={() => handleOptionClick("Pancakes")}
+            className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+              selectedOption === 'Pancakes' ? 'text-blue': 'text-transparent' }`}
           >
             PANCAKES
           </button>
-          {userVote && <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>}
+          <div className="h-1">
+            {userVote && <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>}
+          </div>
         </div>
       </div>
       {/* Display user's vote */}
       {/* {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>} */}
       
-      <div>
-        <button className="rounded-full px-7 py-2 tracking-wider text-sage bg-blue font-main">VOTE</button>
+      <div className="h-[40px]">
+        {selectedOption &&
+        <button 
+          onClick={()=> handleVote({selectedOption})}
+          className="rounded-full px-7 py-2 tracking-wider text-sage bg-blue font-main"
+        >
+          VOTE
+        </button>}
       </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
