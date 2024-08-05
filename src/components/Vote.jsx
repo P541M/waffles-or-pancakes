@@ -120,10 +120,9 @@ const Vote = () => {
           >
             WAFFLES
           </button>
-          <div className="h-1">
-            {userVote && (
-              <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>
-            )}
+          {/* Display Waffles vote count */}
+          <div className="mt-2">
+            <p className="font-main text-blue">Wafflers: {votes.Waffles}</p>
           </div>
         </div>
         {/* The Character */}
@@ -141,7 +140,7 @@ const Vote = () => {
           ></img>
         </div>
         {/* Pancakes Vote Button */}
-        <div className="flex w-64 items-center justify-center">
+        <div className="flex w-64 flex-col items-center justify-center">
           <button
             onClick={() => handleOptionClick("Pancakes")}
             className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
@@ -150,15 +149,12 @@ const Vote = () => {
           >
             PANCAKES
           </button>
-          <div className="h-1">
-            {userVote && (
-              <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>
-            )}
+          {/* Display Pancakes vote count */}
+          <div className="mt-2">
+            <p className="font-main text-blue">Pancakers: {votes.Pancakes}</p>
           </div>
         </div>
       </div>
-      {/* Display user's vote */}
-      {/* {userVote && <p className="mt-4 text-xl">You voted for {userVote}</p>} */}
 
       <div className="h-[40px]">
         {selectedOption && (

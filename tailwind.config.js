@@ -17,19 +17,19 @@ module.exports = {
     },
   },
   plugins: [
-    function({ addUtilities }) {
+    function ({ addUtilities }) {
       const newUtilities = {
-        '.text-stroke-1': {
-          '-webkit-text-stroke-width': '1px',
+        ".text-stroke-1": {
+          "-webkit-text-stroke-width": "1px",
         },
-        '.text-stroke-3': {
-          '-webkit-text-stroke-width': '3px',
+        ".text-stroke-3": {
+          "-webkit-text-stroke-width": "3px",
         },
-        '.text-stroke-blue': {
-          '-webkit-text-stroke-color': '#24384C',
+        ".text-stroke-blue": {
+          "-webkit-text-stroke-color": "#24384C",
         },
-      }
-      addUtilities(newUtilities, ['responsive', 'hover'])
-    }
+      };
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
   ],
 };
