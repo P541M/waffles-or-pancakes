@@ -102,22 +102,22 @@ const Vote = () => {
   };
 
   // Reset user's vote
-  const resetVote = () => {
-    localStorage.removeItem("userId");
-    setUserVote(null);
-    setSwitchMessage("");
-    setDisplayedImage(avatar);
-  };
+  // const resetVote = () => {
+  //   localStorage.removeItem("userId");
+  //   setUserVote(null);
+  //   setSwitchMessage("");
+  //   setDisplayedImage(avatar);
+  // };
 
   // Reset all votes
-  const resetCounter = async () => {
-    try {
-      await axios.post("http://localhost:5000/reset");
-      fetchVotes(); // Update the votes after resetting
-    } catch (error) {
-      console.error("Error resetting votes", error);
-    }
-  };
+  // const resetCounter = async () => {
+  //   try {
+  //     await axios.post("http://localhost:5000/reset");
+  //     fetchVotes(); // Update the votes after resetting
+  //   } catch (error) {
+  //     console.error("Error resetting votes", error);
+  //   }
+  // };
 
   return (
     <section className="flex min-h-screen flex-col items-center justify-center bg-sage">
@@ -182,19 +182,19 @@ const Vote = () => {
       </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
-      <button
+      {/* <button
         onClick={resetVote}
         className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Vote
-      </button>
+      </button> */}
       {/* Reset Counter Button */}
-      <button
+      {/* <button
         onClick={resetCounter}
         className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Counter
-      </button>
+      </button> */}
     </section>
   );
 };
