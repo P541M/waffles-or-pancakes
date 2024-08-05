@@ -4,12 +4,15 @@ import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating uniqu
 import avatar from "../assets/characters/naked.png";
 import pancake from "../assets/characters/pancakes.png";
 import waffle from "../assets/characters/waffles.png";
+import skewedPancake from "../assets/characters/pancakes_skewed.png"; // Import skewed versions of the characters
+import skewedWaffle from "../assets/characters/waffles_skewed.png";
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
   const [userVote, setUserVote] = useState(null); // Track the user's vote
   const [switchMessage, setSwitchMessage] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
+  const [displayedImage, setDisplayedImage] = useState(avatar);
 
   // Fetch votes and user vote on component mount
   useEffect(() => {
@@ -65,6 +68,22 @@ const Vote = () => {
   // Handle user selection
   const handleOptionClick = (option) => {
     setSelectedOption(option);
+
+    // Show skewed image for transition
+    if (option === "Pancakes") {
+      setDisplayedImage(skewedPancake);
+    } else if (option === "Waffles") {
+      setDisplayedImage(skewedWaffle);
+    }
+
+    setTimeout(() => {
+      // Set the final image after the skewed image
+      if (option === "Pancakes") {
+        setDisplayedImage(pancake);
+      } else if (option === "Waffles") {
+        setDisplayedImage(waffle);
+      }
+    }, 10); // Display skewed image for 10 milliseconds
   };
 
   // Handle user voting
@@ -87,6 +106,7 @@ const Vote = () => {
     localStorage.removeItem("userId");
     setUserVote(null);
     setSwitchMessage("");
+    setDisplayedImage(avatar);
   };
 
   // Reset all votes
@@ -126,17 +146,11 @@ const Vote = () => {
           </div>
         </div>
         {/* The Character */}
-        <div className="z-10 flex items-center justify-center">
+        <div className="relative flex h-80 w-80 items-center justify-center">
           <img
-            src={
-              selectedOption === "Pancakes"
-                ? pancake
-                : selectedOption === "Waffles"
-                  ? waffle
-                  : avatar
-            }
+            src={displayedImage}
             alt=""
-            className="h-80 object-contain"
+            className="absolute h-full object-contain"
           ></img>
         </div>
         {/* Pancakes Vote Button */}
