@@ -6,6 +6,8 @@ import pancake from "../assets/characters/pancakes.png";
 import waffle from "../assets/characters/waffles.png";
 import skewedPancake from "../assets/characters/pancakes_skewed.png"; // Import skewed versions of the characters
 import skewedWaffle from "../assets/characters/waffles_skewed.png";
+import skewedRight from "../assets/characters/naked_right.png"; // Placeholder for skewed avatar version 1
+import skewedLeft from "../assets/characters/naked_left.png"; // Placeholder for skewed avatar version 2
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
@@ -102,29 +104,57 @@ const Vote = () => {
   };
 
   // Reset user's vote
-  // const resetVote = () => {
-  //   localStorage.removeItem("userId");
-  //   setUserVote(null);
-  //   setSwitchMessage("");
-  //   setDisplayedImage(avatar);
-  // };
+  /*
+  const resetVote = () => {
+    localStorage.removeItem("userId");
+    setUserVote(null);
+    setSwitchMessage("");
+    setDisplayedImage(avatar);
+  };
+  */
 
   // Reset all votes
-  // const resetCounter = async () => {
-  //   try {
-  //     await axios.post("http://localhost:5000/reset");
-  //     fetchVotes(); // Update the votes after resetting
-  //   } catch (error) {
-  //     console.error("Error resetting votes", error);
-  //   }
-  // };
+  /*
+  const resetCounter = async () => {
+    try {
+      await axios.post("http://localhost:5000/reset");
+      fetchVotes(); // Update the votes after resetting
+    } catch (error) {
+      console.error("Error resetting votes", error);
+    }
+  };
+  */
+
+  // Reset to default character when clicking outside options and vote button
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        !event.target.closest(".option-button") &&
+        !event.target.closest(".vote-button")
+      ) {
+        setDisplayedImage(
+          selectedOption === "Pancakes" ? skewedLeft : skewedRight,
+        );
+        setTimeout(() => {
+          setDisplayedImage(avatar);
+        }, 12); // Display skewed avatar for 12 milliseconds
+        setSelectedOption(null);
+        setSwitchMessage("");
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [selectedOption]);
 
   return (
     <section className="flex min-h-screen flex-col items-center justify-center bg-sage">
       {/* Display Switch Message */}
       <div className="h-4">
         {switchMessage && (
-          <p className="mt-4 font-sub text-xl text-blue">{switchMessage}</p>
+          <p className="font-sub text-xl text-blue">{switchMessage}</p>
         )}
       </div>
 
@@ -134,7 +164,7 @@ const Vote = () => {
         <div className="flex w-64 flex-col items-center justify-center">
           <button
             onClick={() => handleOptionClick("Waffles")}
-            className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+            className={`option-button font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
               selectedOption === "Waffles" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -157,7 +187,7 @@ const Vote = () => {
         <div className="flex w-64 flex-col items-center justify-center">
           <button
             onClick={() => handleOptionClick("Pancakes")}
-            className={`font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
+            className={`option-button font-main text-6xl text-stroke-3 text-stroke-blue hover:text-blue ${
               selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -174,7 +204,7 @@ const Vote = () => {
         {selectedOption && (
           <button
             onClick={() => handleVote(selectedOption)}
-            className="rounded-full bg-blue px-7 py-2 font-main tracking-wider text-sage"
+            className="vote-button rounded-full bg-blue px-7 py-2 font-main tracking-wider text-sage"
           >
             VOTE
           </button>
@@ -182,19 +212,23 @@ const Vote = () => {
       </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
-      {/* <button
+      {/* 
+      <button
         onClick={resetVote}
         className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Vote
-      </button> */}
+      </button>
+      */}
       {/* Reset Counter Button */}
-      {/* <button
+      {/* 
+      <button
         onClick={resetCounter}
         className="m-2 rounded bg-yellow px-4 py-4 text-blue"
       >
         Reset Counter
-      </button> */}
+      </button>
+      */}
     </section>
   );
 };
