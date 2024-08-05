@@ -83,7 +83,7 @@ const Vote = () => {
       } else if (option === "Waffles") {
         setDisplayedImage(waffle);
       }
-    }, 10); // Display skewed image for 10 milliseconds
+    }, 12); // Display skewed image for 12 milliseconds
   };
 
   // Handle user voting
