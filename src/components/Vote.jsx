@@ -150,71 +150,73 @@ const Vote = () => {
   }, [selectedOption]);
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-center bg-sage p-4 md:p-8 lg:p-16">
-      {/* Display Switch Message */}
-      <div className="mb-4 h-4 md:mb-8 lg:mb-12">
-        {switchMessage && (
-          <p className="px-4 text-center font-sub text-xl text-blue">
-            {switchMessage}
-          </p>
-        )}
-      </div>
-
-      {/* Voting Section */}
-      <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
-        {/* Waffles Vote Button */}
-        <div className="flex w-full flex-col items-center justify-center md:w-64">
-          <button
-            onClick={() => handleOptionClick("Waffles")}
-            className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-              selectedOption === "Waffles" ? "text-blue" : "text-transparent"
-            }`}
-          >
-            WAFFLES
-          </button>
-          {/* Display Waffles vote count */}
-          <div className="mt-2">
-            <p className="font-main text-xl text-blue md:text-2xl">
-              Wafflers: {votes.Waffles}
+    <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
+      <div className="flex flex-grow flex-col items-center justify-center">
+        {/* Display Switch Message */}
+        <div className="mb-4 h-4 md:mb-8 lg:mb-12">
+          {switchMessage && (
+            <p className="px-4 text-center font-sub text-xl text-blue">
+              {switchMessage}
             </p>
+          )}
+        </div>
+
+        {/* Voting Section */}
+        <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
+          {/* Waffles Vote Button */}
+          <div className="flex w-full flex-col items-center justify-center md:w-64">
+            <button
+              onClick={() => handleOptionClick("Waffles")}
+              className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
+                selectedOption === "Waffles" ? "text-blue" : "text-transparent"
+              }`}
+            >
+              WAFFLES
+            </button>
+            {/* Display Waffles vote count */}
+            <div className="mt-2">
+              <p className="font-main text-xl text-blue md:text-2xl">
+                Wafflers: {votes.Waffles}
+              </p>
+            </div>
+          </div>
+          {/* The Character */}
+          <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
+            <img
+              src={displayedImage}
+              alt=""
+              className="absolute h-full object-contain"
+            ></img>
+          </div>
+          {/* Pancakes Vote Button */}
+          <div className="flex w-full flex-col items-center justify-center md:w-64">
+            <button
+              onClick={() => handleOptionClick("Pancakes")}
+              className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
+                selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
+              }`}
+            >
+              PANCAKES
+            </button>
+            {/* Display Pancakes vote count */}
+            <div className="mt-2">
+              <p className="font-main text-xl text-blue md:text-2xl">
+                Pancakers: {votes.Pancakes}
+              </p>
+            </div>
           </div>
         </div>
-        {/* The Character */}
-        <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
-          <img
-            src={displayedImage}
-            alt=""
-            className="absolute h-full object-contain"
-          ></img>
-        </div>
-        {/* Pancakes Vote Button */}
-        <div className="flex w-full flex-col items-center justify-center md:w-64">
-          <button
-            onClick={() => handleOptionClick("Pancakes")}
-            className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-              selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
-            }`}
-          >
-            PANCAKES
-          </button>
-          {/* Display Pancakes vote count */}
-          <div className="mt-2">
-            <p className="font-main text-xl text-blue md:text-2xl">
-              Pancakers: {votes.Pancakes}
-            </p>
-          </div>
-        </div>
-      </div>
 
-      <div className="mt-3 h-[40px] md:mt-5">
-        {selectedOption && (
-          <button
-            onClick={() => handleVote(selectedOption)}
-            className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
-          >
-            VOTE!
-          </button>
-        )}
+        <div className="mt-3 h-[40px] md:mt-5">
+          {selectedOption && (
+            <button
+              onClick={() => handleVote(selectedOption)}
+              className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
+            >
+              VOTE!
+            </button>
+          )}
+        </div>
       </div>
       {/* Testing components, don't mind these */}
       {/* Reset Vote Button */}
@@ -235,6 +237,29 @@ const Vote = () => {
         Reset Counter
       </button>
       */}
+      <footer className="absolute bottom-0 left-0 px-4 py-4 text-left text-sm text-blue opacity-50">
+        <p>&copy; {new Date().getFullYear()} Waffles Or Pancakes!?</p>
+        <p>
+          Crafted by{" "}
+          <a
+            href="https://github.com/P541M"
+            className="hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Eleazar
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://github.com/milychang19"
+            className="hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Emily
+          </a>
+        </p>
+      </footer>
     </section>
   );
 };
