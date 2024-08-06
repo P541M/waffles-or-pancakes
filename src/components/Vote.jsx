@@ -166,7 +166,7 @@ const Vote = () => {
         <div className="flex w-full flex-col items-center justify-center md:w-64">
           <button
             onClick={() => handleOptionClick("Waffles")}
-            className={`option-button font-main text-3xl text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
+            className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
               selectedOption === "Waffles" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -191,7 +191,7 @@ const Vote = () => {
         <div className="flex w-full flex-col items-center justify-center md:w-64">
           <button
             onClick={() => handleOptionClick("Pancakes")}
-            className={`option-button font-main text-3xl text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
+            className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
               selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
             }`}
           >
@@ -206,13 +206,13 @@ const Vote = () => {
         </div>
       </div>
 
-      <div className="mt-6 h-[40px] md:mt-10">
+      <div className="mt-3 h-[40px] md:mt-5">
         {selectedOption && (
           <button
             onClick={() => handleVote(selectedOption)}
             className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
           >
-            VOTE
+            VOTE!
           </button>
         )}
       </div>
