@@ -3,3 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide default scrollbars */
+html,
+body {
+  overflow: auto; /* Allow default scroll */
+}
+
+html {
+  overflow: -moz-scrollbars-none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
