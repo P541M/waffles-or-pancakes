@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
 import avatar from "../assets/characters/naked.png";
@@ -18,19 +18,7 @@ const Vote = () => {
 
   const apiKey = process.env.REACT_APP_API_KEY; // Ensure this is added to your frontend environment variables in Vercel
 
-  // Fetch votes and user vote on component mount
-  useEffect(() => {
-    const storedUserId = localStorage.getItem("userId");
-    if (!storedUserId) {
-      const userId = uuidv4();
-      localStorage.setItem("userId", userId);
-    }
-    fetchVotes();
-    fetchUserVote();
-  }, []);
-
-  // Fetch current vote counts from the server
-  const fetchVotes = async () => {
+  const fetchVotes = useCallback(async () => {
     try {
       const response = await axios.get("/api/votes", {
         headers: {
@@ -41,10 +29,9 @@ const Vote = () => {
     } catch (error) {
       console.error("Error fetching votes", error);
     }
-  };
+  }, [apiKey]);
 
-  // Fetch the user's vote from the server
-  const fetchUserVote = async () => {
+  const fetchUserVote = useCallback(async () => {
     const userId = localStorage.getItem("userId");
     try {
       const response = await axios.get(`/api/userVote/${userId}`, {
@@ -61,7 +48,18 @@ const Vote = () => {
         console.error("Error fetching user vote", error);
       }
     }
-  };
+  }, [apiKey]);
+
+  // Fetch votes and user vote on component mount
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    if (!storedUserId) {
+      const userId = uuidv4();
+      localStorage.setItem("userId", userId);
+    }
+    fetchVotes();
+    fetchUserVote();
+  }, [fetchVotes, fetchUserVote]);
 
   // Generate a random switch message
   const getRandomSwitchMessage = (from, to) => {
