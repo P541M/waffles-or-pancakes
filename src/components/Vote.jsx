@@ -30,9 +30,7 @@ const Vote = () => {
   // Fetch current vote counts from the server
   const fetchVotes = async () => {
     try {
-      const response = await axios.get(
-        "https://waffles-or-pancakes-backend.vercel.app/votes",
-      ); // Use relative path
+      const response = await axios.get("/api/votes"); // Use relative path
       setVotes(response.data);
     } catch (error) {
       console.error("Error fetching votes", error);
@@ -43,9 +41,7 @@ const Vote = () => {
   const fetchUserVote = async () => {
     const userId = localStorage.getItem("userId");
     try {
-      const response = await axios.get(
-        `https://waffles-or-pancakes-backend.vercel.app/userVote/${userId}`,
-      ); // Use relative path
+      const response = await axios.get(`/api/userVote/${userId}`); // Use relative path
       setUserVote(response.data.vote);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -94,10 +90,7 @@ const Vote = () => {
   const handleVote = async (choice) => {
     const userId = localStorage.getItem("userId");
     try {
-      await axios.post("https://waffles-or-pancakes-backend.vercel.app/vote", {
-        userId,
-        vote: choice,
-      }); // Use relative path
+      await axios.post("/api/vote", { userId, vote: choice }); // Use relative path
       if (userVote && userVote !== choice) {
         setSwitchMessage(getRandomSwitchMessage(userVote, choice));
       }
