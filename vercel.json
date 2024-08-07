@@ -7,16 +7,10 @@
       "config": { "distDir": "build" }
     }
   ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://waffles-or-pancakes-backend.vercel.app/api/$1"
+      "destination": "https://your-backend-deployment-url/api/$1"
     }
   ]
 }
