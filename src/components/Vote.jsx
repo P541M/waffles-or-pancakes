@@ -16,6 +16,8 @@ const Vote = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [displayedImage, setDisplayedImage] = useState(avatar);
 
+  const apiKey = process.env.REACT_APP_API_KEY; // Ensure this is added to your frontend environment variables in Vercel
+
   // Fetch votes and user vote on component mount
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -30,7 +32,11 @@ const Vote = () => {
   // Fetch current vote counts from the server
   const fetchVotes = async () => {
     try {
-      const response = await axios.get("/api/votes"); // Use relative path
+      const response = await axios.get("/api/votes", {
+        headers: {
+          "x-api-key": apiKey,
+        },
+      });
       setVotes(response.data);
     } catch (error) {
       console.error("Error fetching votes", error);
@@ -41,7 +47,11 @@ const Vote = () => {
   const fetchUserVote = async () => {
     const userId = localStorage.getItem("userId");
     try {
-      const response = await axios.get(`/api/userVote/${userId}`); // Use relative path
+      const response = await axios.get(`/api/userVote/${userId}`, {
+        headers: {
+          "x-api-key": apiKey,
+        },
+      });
       setUserVote(response.data.vote);
     } catch (error) {
       if (error.response && error.response.status === 404) {
@@ -96,7 +106,15 @@ const Vote = () => {
 
     const userId = localStorage.getItem("userId");
     try {
-      await axios.post("/api/vote", { userId, vote: choice }); // Use relative path
+      await axios.post(
+        "/api/vote",
+        { userId, vote: choice },
+        {
+          headers: {
+            "x-api-key": apiKey,
+          },
+        },
+      );
       if (userVote && userVote !== choice) {
         setSwitchMessage(getRandomSwitchMessage(userVote, choice));
       }
