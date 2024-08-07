@@ -88,6 +88,12 @@ const Vote = () => {
 
   // Handle user voting
   const handleVote = async (choice) => {
+    if (userVote === choice) {
+      // If the user is voting for the same option, do nothing
+      console.log("You have already voted for this option.");
+      return;
+    }
+
     const userId = localStorage.getItem("userId");
     try {
       await axios.post("/api/vote", { userId, vote: choice }); // Use relative path
