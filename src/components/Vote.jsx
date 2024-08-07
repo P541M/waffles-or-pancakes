@@ -4,10 +4,6 @@ import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating uniqu
 import avatar from "../assets/characters/naked.png";
 import pancake from "../assets/characters/pancakes.png";
 import waffle from "../assets/characters/waffles.png";
-import skewedPancake from "../assets/characters/pancakes_skewed.png"; // Import skewed versions of the characters
-import skewedWaffle from "../assets/characters/waffles_skewed.png";
-import skewedRight from "../assets/characters/naked_right.png"; // Placeholder for skewed avatar version 1
-import skewedLeft from "../assets/characters/naked_left.png"; // Placeholder for skewed avatar version 2
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
@@ -77,21 +73,12 @@ const Vote = () => {
   const handleOptionClick = (option) => {
     setSelectedOption(option);
 
-    // Show skewed image for transition
+    // Set the final image based on the selected option
     if (option === "Pancakes") {
-      setDisplayedImage(skewedPancake);
+      setDisplayedImage(pancake);
     } else if (option === "Waffles") {
-      setDisplayedImage(skewedWaffle);
+      setDisplayedImage(waffle);
     }
-
-    setTimeout(() => {
-      // Set the final image after the skewed image
-      if (option === "Pancakes") {
-        setDisplayedImage(pancake);
-      } else if (option === "Waffles") {
-        setDisplayedImage(waffle);
-      }
-    }, 12); // Display skewed image for 12 milliseconds
   };
 
   // Handle user voting
@@ -130,12 +117,7 @@ const Vote = () => {
         !event.target.closest(".option-button") &&
         !event.target.closest(".vote-button")
       ) {
-        setDisplayedImage(
-          selectedOption === "Pancakes" ? skewedLeft : skewedRight,
-        );
-        setTimeout(() => {
-          setDisplayedImage(avatar);
-        }, 20); // Display skewed avatar for 20 milliseconds
+        setDisplayedImage(avatar);
         setSelectedOption(null);
         setSwitchMessage("");
       }
