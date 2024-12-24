@@ -199,7 +199,7 @@ const Vote = () => {
         </div>
       </div>
       <footer className="absolute bottom-0 left-0 px-4 py-4 text-left text-sm text-blue opacity-50">
-        <p>&copy; {new Date().getFullYear()} Waffles Or Pancakes!?</p>
+        <p>&copy; {new Date().getFullYear()} Waffles or Pancakes?!</p>
         <p>
           Crafted by{" "}
           <a
