@@ -57,6 +57,7 @@ const Vote = () => {
     fetchUserVote();
   }, [fetchVotes, fetchUserVote]);
 
+  // Update displayed image whenever userVote changes
   useEffect(() => {
     if (userVote === "Pancakes") {
       setDisplayedImage(pancake);
@@ -77,6 +78,12 @@ const Vote = () => {
     ];
     return messages[Math.floor(Math.random() * messages.length)];
   };
+
+  // Highlight logic: if user already voted for something, or user just selected it
+  const isWafflesActive =
+    selectedOption === "Waffles" || userVote === "Waffles";
+  const isPancakesActive =
+    selectedOption === "Pancakes" || userVote === "Pancakes";
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -116,6 +123,8 @@ const Vote = () => {
     }
   };
 
+  // Only reset to avatar if user hasn't voted yet.
+  // Otherwise, keep the user's existing vote as the displayed character.
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
@@ -142,6 +151,7 @@ const Vote = () => {
   return (
     <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
       <div className="flex flex-grow flex-col items-center justify-center">
+        {/* Switch Message */}
         <div className="mb-4 h-4 md:mb-8 lg:mb-12">
           {switchMessage && (
             <p className="px-4 text-center font-sub text-xl text-blue">
@@ -149,12 +159,15 @@ const Vote = () => {
             </p>
           )}
         </div>
+
+        {/* Voting Section */}
         <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
+          {/* Waffles */}
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Waffles")}
               className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-                selectedOption === "Waffles" ? "text-blue" : "text-transparent"
+                isWafflesActive ? "text-blue" : "text-transparent"
               }`}
             >
               WAFFLES
@@ -165,6 +178,8 @@ const Vote = () => {
               </p>
             </div>
           </div>
+
+          {/* Character */}
           <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
             <img
               src={displayedImage}
@@ -172,11 +187,13 @@ const Vote = () => {
               className="absolute h-full object-contain"
             />
           </div>
+
+          {/* Pancakes */}
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Pancakes")}
               className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-                selectedOption === "Pancakes" ? "text-blue" : "text-transparent"
+                isPancakesActive ? "text-blue" : "text-transparent"
               }`}
             >
               PANCAKES
@@ -188,6 +205,8 @@ const Vote = () => {
             </div>
           </div>
         </div>
+
+        {/* Vote Button */}
         <div className="mt-3 h-[40px] md:mt-5">
           {selectedOption && (
             <button
@@ -199,6 +218,7 @@ const Vote = () => {
           )}
         </div>
       </div>
+
       <footer className="absolute bottom-0 left-0 px-4 py-4 text-left text-sm text-blue opacity-50">
         <p>&copy; {new Date().getFullYear()} Waffles or Pancakes?!</p>
         <p>
