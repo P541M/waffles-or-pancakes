@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid"; // Import UUID library for generating unique IDs
+import { v4 as uuidv4 } from "uuid";
 import avatar from "../assets/characters/naked.png";
 import pancake from "../assets/characters/pancakes.png";
 import waffle from "../assets/characters/waffles.png";
 
 const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
-  const [userVote, setUserVote] = useState(null); // Track the user's vote
+  const [userVote, setUserVote] = useState(null);
   const [switchMessage, setSwitchMessage] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [displayedImage, setDisplayedImage] = useState(avatar);
 
-  const apiKey = process.env.REACT_APP_API_KEY; // Ensure this is added to your frontend environment variables in Vercel
+  const apiKey = process.env.REACT_APP_API_KEY;
 
   const fetchVotes = useCallback(async () => {
     try {
@@ -29,6 +29,8 @@ const Vote = () => {
 
   const fetchUserVote = useCallback(async () => {
     const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
     try {
       const response = await axios.get(`/api/userVote/${userId}`, {
         headers: {
@@ -38,7 +40,6 @@ const Vote = () => {
       setUserVote(response.data.vote);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        // Handle the case where the user vote is not found
         setUserVote(null);
       } else {
         console.error("Error fetching user vote", error);
@@ -46,7 +47,6 @@ const Vote = () => {
     }
   }, [apiKey]);
 
-  // Fetch votes and user vote on component mount
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     if (!storedUserId) {
@@ -57,7 +57,16 @@ const Vote = () => {
     fetchUserVote();
   }, [fetchVotes, fetchUserVote]);
 
-  // Generate a random switch message
+  useEffect(() => {
+    if (userVote === "Pancakes") {
+      setDisplayedImage(pancake);
+    } else if (userVote === "Waffles") {
+      setDisplayedImage(waffle);
+    } else {
+      setDisplayedImage(avatar);
+    }
+  }, [userVote]);
+
   const getRandomSwitchMessage = (from, to) => {
     const messages = [
       `WHAT?! You switched from ${from} to ${to}!`,
@@ -69,11 +78,8 @@ const Vote = () => {
     return messages[Math.floor(Math.random() * messages.length)];
   };
 
-  // Handle user selection
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-
-    // Set the final image based on the selected option
     if (option === "Pancakes") {
       setDisplayedImage(pancake);
     } else if (option === "Waffles") {
@@ -81,10 +87,8 @@ const Vote = () => {
     }
   };
 
-  // Handle user voting
   const handleVote = async (choice) => {
     if (userVote === choice) {
-      // If the user is voting for the same option, do nothing
       console.log("You have already voted for this option.");
       return;
     }
@@ -100,26 +104,32 @@ const Vote = () => {
           },
         },
       );
+
       if (userVote && userVote !== choice) {
         setSwitchMessage(getRandomSwitchMessage(userVote, choice));
       }
+
       setUserVote(choice);
-      fetchVotes(); // Update the votes after voting
+      fetchVotes();
     } catch (error) {
       console.error("Error submitting vote", error);
     }
   };
 
-  // Reset to default character when clicking outside options and vote button
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
         !event.target.closest(".option-button") &&
         !event.target.closest(".vote-button")
       ) {
-        setDisplayedImage(avatar);
         setSelectedOption(null);
         setSwitchMessage("");
+
+        if (!userVote) {
+          setDisplayedImage(avatar);
+        } else {
+          setDisplayedImage(userVote === "Pancakes" ? pancake : waffle);
+        }
       }
     };
 
@@ -127,12 +137,11 @@ const Vote = () => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [selectedOption]);
+  }, [userVote]);
 
   return (
     <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
       <div className="flex flex-grow flex-col items-center justify-center">
-        {/* Display Switch Message */}
         <div className="mb-4 h-4 md:mb-8 lg:mb-12">
           {switchMessage && (
             <p className="px-4 text-center font-sub text-xl text-blue">
@@ -140,10 +149,7 @@ const Vote = () => {
             </p>
           )}
         </div>
-
-        {/* Voting Section */}
         <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
-          {/* Waffles Vote Button */}
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Waffles")}
@@ -153,22 +159,19 @@ const Vote = () => {
             >
               WAFFLES
             </button>
-            {/* Display Waffles vote count */}
             <div className="mt-2">
               <p className="font-main text-xl text-blue md:text-2xl">
                 Wafflers: {votes.Waffles}
               </p>
             </div>
           </div>
-          {/* The Character */}
           <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
             <img
               src={displayedImage}
               alt=""
               className="absolute h-full object-contain"
-            ></img>
+            />
           </div>
-          {/* Pancakes Vote Button */}
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Pancakes")}
@@ -178,7 +181,6 @@ const Vote = () => {
             >
               PANCAKES
             </button>
-            {/* Display Pancakes vote count */}
             <div className="mt-2">
               <p className="font-main text-xl text-blue md:text-2xl">
                 Pancakers: {votes.Pancakes}
@@ -186,7 +188,6 @@ const Vote = () => {
             </div>
           </div>
         </div>
-
         <div className="mt-3 h-[40px] md:mt-5">
           {selectedOption && (
             <button
