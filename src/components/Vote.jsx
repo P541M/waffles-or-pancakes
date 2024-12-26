@@ -123,13 +123,12 @@ const Vote = () => {
     }
   };
 
-  // NEW FUNCTION: Revoke the current user’s vote
+  // Revoke the current user’s vote
   const handleRevokeVote = async () => {
-    if (!userVote) return; // If the user has no vote, do nothing
+    if (!userVote) return;
 
     const userId = localStorage.getItem("userId");
     try {
-      // POST request to revoke a user's vote
       await axios.post(
         "/api/revokeUserVote",
         { userId },
@@ -140,25 +139,23 @@ const Vote = () => {
         },
       );
 
-      // Reset local state
       setUserVote(null);
       setSelectedOption(null);
       setDisplayedImage(avatar);
       setSwitchMessage("");
-
-      // Refresh the overall vote counts
       fetchVotes();
     } catch (error) {
       console.error("Error revoking vote", error);
     }
   };
 
+  // Clear selections when clicking outside
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
         !event.target.closest(".option-button") &&
         !event.target.closest(".vote-button") &&
-        !event.target.closest(".revoke-button") // exclude clicks on the revoke button
+        !event.target.closest(".revoke-button")
       ) {
         setSelectedOption(null);
         setSwitchMessage("");
@@ -183,7 +180,7 @@ const Vote = () => {
         {/* Switch Message */}
         <div className="mb-4 h-4 md:mb-8 lg:mb-12">
           {switchMessage && (
-            <p className="px-4 text-center font-sub text-xl text-blue">
+            <p className="fade-in px-4 text-center font-sub text-xl text-blue">
               {switchMessage}
             </p>
           )}
@@ -195,8 +192,10 @@ const Vote = () => {
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Waffles")}
-              className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-                isWafflesActive ? "text-blue" : "text-transparent"
+              className={`option-button transform font-main text-3xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 md:text-6xl ${
+                isWafflesActive
+                  ? "text-blue"
+                  : "text-transparent hover:text-blue"
               }`}
             >
               WAFFLES
@@ -209,7 +208,7 @@ const Vote = () => {
           </div>
 
           {/* Character */}
-          <div className="relative flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
+          <div className="relative z-50 flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
             <img
               src={displayedImage}
               alt=""
@@ -221,8 +220,10 @@ const Vote = () => {
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Pancakes")}
-              className={`option-button font-main text-3xl tracking-wide text-stroke-3 text-stroke-blue hover:text-blue md:text-6xl ${
-                isPancakesActive ? "text-blue" : "text-transparent"
+              className={`option-button transform font-main text-3xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 md:text-6xl ${
+                isPancakesActive
+                  ? "text-blue"
+                  : "text-transparent hover:text-blue"
               }`}
             >
               PANCAKES
@@ -240,17 +241,16 @@ const Vote = () => {
           {selectedOption && (
             <button
               onClick={() => handleVote(selectedOption)}
-              className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
+              className="vote-button transform rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage transition-transform duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
             >
               VOTE!
             </button>
           )}
 
-          {/* NEW: "Revoke my vote" button, visible only if user has a vote */}
           {userVote && (
             <button
               onClick={handleRevokeVote}
-              className="revoke-button rounded-full bg-yellow px-4 py-2 font-main text-lg tracking-wider text-blue md:px-7 md:py-4 md:text-xl"
+              className="revoke-button transform rounded-full bg-yellow px-4 py-2 font-main text-lg tracking-wider text-blue transition-transform duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
             >
               Reset my vote!
             </button>
