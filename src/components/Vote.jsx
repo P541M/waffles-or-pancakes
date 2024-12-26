@@ -252,7 +252,7 @@ const Vote = () => {
               onClick={handleRevokeVote}
               className="revoke-button rounded-full bg-yellow px-4 py-2 font-main text-lg tracking-wider text-blue md:px-7 md:py-4 md:text-xl"
             >
-              Revoke!
+              Reset my vote!
             </button>
           )}
         </div>
