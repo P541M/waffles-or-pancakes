@@ -79,6 +79,16 @@ const Vote = () => {
     return messages[Math.floor(Math.random() * messages.length)];
   };
 
+  // Auto-hide the switch message after 3 seconds
+  useEffect(() => {
+    if (switchMessage) {
+      const timer = setTimeout(() => {
+        setSwitchMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [switchMessage]);
+
   // Highlight logic: if user already voted for something, or user just selected it
   const isWafflesActive =
     selectedOption === "Waffles" || userVote === "Waffles";
@@ -175,17 +185,15 @@ const Vote = () => {
   }, [userVote]);
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
-      <div className="flex flex-grow flex-col items-center justify-center">
-        {/* Switch Message */}
-        <div className="mb-4 h-4 md:mb-8 lg:mb-12">
-          {switchMessage && (
-            <p className="fade-in px-4 text-center font-sub text-xl text-blue">
-              {switchMessage}
-            </p>
-          )}
+    <section className="relative flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
+      {/* Toast-like Switch Message */}
+      {switchMessage && (
+        <div className="animate-slideIn absolute left-1/2 top-8 z-50 flex -translate-x-1/2 transform items-center rounded-md bg-blue px-4 py-2 text-sage shadow-lg transition-transform duration-300">
+          <p className="font-sub text-sm md:text-base">{switchMessage}</p>
         </div>
+      )}
 
+      <div className="flex flex-grow flex-col items-center justify-center">
         {/* Voting Section */}
         <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
           {/* Waffles */}

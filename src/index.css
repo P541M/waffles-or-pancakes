@@ -19,3 +19,18 @@ html {
 html::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+@keyframes slideIn {
+  0% {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.animate-slideIn {
+  animation: slideIn 0.3s forwards;
+}
