@@ -250,7 +250,7 @@ const Vote = () => {
           {userVote && (
             <button
               onClick={handleRevokeVote}
-              className="revoke-button transform rounded-full bg-yellow px-4 py-2 font-main text-lg tracking-wider text-blue transition-transform duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
+              className="revoke-button hover:bg-yellow-100 rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-colors duration-200 hover:opacity-100"
             >
               Reset my vote!
             </button>
