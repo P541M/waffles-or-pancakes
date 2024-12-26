@@ -199,40 +199,42 @@ const Vote = () => {
   }, [switchMessage]);
 
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
+    <section className="relative flex min-h-screen flex-col items-center justify-between bg-sage p-2 sm:p-4 md:p-8 lg:p-16">
       {/* Toast-like Switch Message with Slide In/Out */}
       {switchMessage && (
         <div
-          className={`absolute left-1/2 top-8 z-50 flex -translate-x-1/2 transform items-center rounded-md bg-blue px-4 py-2 text-sage shadow-lg transition-transform duration-300 ${toastAnimation} `}
+          className={`absolute left-1/2 top-4 z-50 flex -translate-x-1/2 transform items-center rounded-md bg-blue px-2 py-1 text-sage shadow-lg transition-transform duration-300 sm:top-6 sm:px-4 sm:py-2 md:top-8 ${toastAnimation} `}
         >
-          <p className="font-sub text-sm md:text-base">{switchMessage}</p>
+          <p className="font-sub text-xs sm:text-sm md:text-base">
+            {switchMessage}
+          </p>
         </div>
       )}
 
       <div className="flex flex-grow flex-col items-center justify-center">
         {/* Voting Section */}
-        <div className="relative flex w-full flex-col items-center justify-center space-y-6 px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
+        <div className="relative flex w-full flex-col items-center justify-center space-y-4 px-2 sm:space-y-6 sm:px-4 md:flex-row md:space-x-10 md:space-y-0 md:px-8 lg:px-16">
           {/* Waffles */}
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Waffles")}
-              className={`option-button transform font-main text-3xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 md:text-6xl ${
+              className={`option-button transform font-main text-2xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 sm:text-3xl md:text-6xl ${
                 isWafflesActive
                   ? "text-blue"
                   : "text-transparent hover:text-blue"
-              }`}
+              } `}
             >
               WAFFLES
             </button>
-            <div className="mt-2">
-              <p className="font-main text-xl text-blue md:text-2xl">
+            <div className="mt-1 sm:mt-2">
+              <p className="font-main text-base text-blue sm:text-lg md:text-2xl">
                 Wafflers: {votes.Waffles}
               </p>
             </div>
           </div>
 
           {/* Character */}
-          <div className="relative z-50 flex h-40 w-40 items-center justify-center md:h-80 md:w-80">
+          <div className="relative z-50 flex h-32 w-32 items-center justify-center sm:h-40 sm:w-40 md:h-80 md:w-80">
             <img
               src={displayedImage}
               alt=""
@@ -244,16 +246,16 @@ const Vote = () => {
           <div className="flex w-full flex-col items-center justify-center md:w-64">
             <button
               onClick={() => handleOptionClick("Pancakes")}
-              className={`option-button transform font-main text-3xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 md:text-6xl ${
+              className={`option-button transform font-main text-2xl tracking-wide transition duration-300 text-stroke-3 text-stroke-blue hover:scale-105 sm:text-3xl md:text-6xl ${
                 isPancakesActive
                   ? "text-blue"
                   : "text-transparent hover:text-blue"
-              }`}
+              } `}
             >
               PANCAKES
             </button>
-            <div className="mt-2">
-              <p className="font-main text-xl text-blue md:text-2xl">
+            <div className="mt-1 sm:mt-2">
+              <p className="font-main text-base text-blue sm:text-lg md:text-2xl">
                 Pancakers: {votes.Pancakes}
               </p>
             </div>
@@ -265,7 +267,7 @@ const Vote = () => {
           {selectedOption && (
             <button
               onClick={() => handleVote(selectedOption)}
-              className="vote-button transform rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage transition-all duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
+              className="vote-button transform rounded-full bg-blue px-4 py-2 font-main text-base tracking-wider text-sage transition-all duration-200 hover:scale-105 hover:bg-green sm:px-6 sm:py-3 sm:text-lg md:px-7 md:py-4 md:text-xl"
             >
               VOTE!
             </button>
@@ -274,7 +276,7 @@ const Vote = () => {
           {userVote && (
             <button
               onClick={handleRevokeVote}
-              className="revoke-button hover:bg-yellow-100 transform rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-all duration-200 hover:scale-105 hover:opacity-100"
+              className="revoke-button hover:bg-yellow-100 transform rounded-full bg-transparent px-2 py-1 font-main text-xs text-blue opacity-70 transition-all duration-200 hover:scale-105 hover:opacity-100 sm:px-3 sm:py-2 sm:text-sm md:text-base"
             >
               Erase my syrup trail!
             </button>
@@ -282,7 +284,7 @@ const Vote = () => {
         </div>
       </div>
 
-      <footer className="absolute bottom-0 left-0 px-4 py-4 text-left text-sm text-blue opacity-50">
+      <footer className="absolute bottom-0 left-0 w-full px-4 py-4 text-left text-xs text-blue opacity-50 sm:text-sm">
         <p>&copy; {new Date().getFullYear()} Waffles or Pancakes?!</p>
         <p>
           Crafted by{" "}
