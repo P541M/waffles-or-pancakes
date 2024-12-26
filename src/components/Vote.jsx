@@ -241,7 +241,7 @@ const Vote = () => {
           {selectedOption && (
             <button
               onClick={() => handleVote(selectedOption)}
-              className="vote-button transform rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage transition-transform duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
+              className="vote-button transform rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage transition-all duration-200 hover:scale-105 hover:bg-green md:px-7 md:py-4 md:text-xl"
             >
               VOTE!
             </button>
