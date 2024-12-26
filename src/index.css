@@ -30,7 +30,21 @@ html::-webkit-scrollbar {
     opacity: 1;
   }
 }
+@keyframes slideOut {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+}
 
+/* Utility classes for Tailwind or plain CSS */
 .animate-slideIn {
   animation: slideIn 0.3s forwards;
+}
+.animate-slideOut {
+  animation: slideOut 0.3s forwards;
 }

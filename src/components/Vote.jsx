@@ -9,6 +9,7 @@ const Vote = () => {
   const [votes, setVotes] = useState({ Waffles: 0, Pancakes: 0 });
   const [userVote, setUserVote] = useState(null);
   const [switchMessage, setSwitchMessage] = useState("");
+  const [toastAnimation, setToastAnimation] = useState("");
   const [selectedOption, setSelectedOption] = useState(null);
   const [displayedImage, setDisplayedImage] = useState(avatar);
 
@@ -68,6 +69,7 @@ const Vote = () => {
     }
   }, [userVote]);
 
+  // If the user changes votes from one item to another
   const getRandomSwitchMessage = (from, to) => {
     const messages = [
       `WHAT?! You switched from ${from} to ${to}!`,
@@ -79,17 +81,33 @@ const Vote = () => {
     return messages[Math.floor(Math.random() * messages.length)];
   };
 
-  // Auto-hide the switch message after 3 seconds
+  // Whenever switchMessage changes, start by sliding in
   useEffect(() => {
     if (switchMessage) {
+      setToastAnimation("animate-slideIn"); // Start showing the toast
+
+      // After 3s, initiate slide-out
       const timer = setTimeout(() => {
-        setSwitchMessage("");
+        setToastAnimation("animate-slideOut");
       }, 3000);
+
       return () => clearTimeout(timer);
     }
   }, [switchMessage]);
 
-  // Highlight logic: if user already voted for something, or user just selected it
+  // When the toastAnimation becomes 'animate-slideOut', wait for
+  // the animation to end, then clear the message from state
+  useEffect(() => {
+    if (toastAnimation === "animate-slideOut") {
+      const timer = setTimeout(() => {
+        setSwitchMessage("");
+        setToastAnimation("");
+      }, 300); // match the slideOut duration
+      return () => clearTimeout(timer);
+    }
+  }, [toastAnimation]);
+
+  // Highlight logic
   const isWafflesActive =
     selectedOption === "Waffles" || userVote === "Waffles";
   const isPancakesActive =
@@ -122,10 +140,10 @@ const Vote = () => {
         },
       );
 
+      // If user was already something else, we display a new message
       if (userVote && userVote !== choice) {
         setSwitchMessage(getRandomSwitchMessage(userVote, choice));
       }
-
       setUserVote(choice);
       fetchVotes();
     } catch (error) {
@@ -152,7 +170,6 @@ const Vote = () => {
       setUserVote(null);
       setSelectedOption(null);
       setDisplayedImage(avatar);
-      setSwitchMessage("");
       fetchVotes();
     } catch (error) {
       console.error("Error revoking vote", error);
@@ -168,12 +185,9 @@ const Vote = () => {
         !event.target.closest(".revoke-button")
       ) {
         setSelectedOption(null);
-        setSwitchMessage("");
-
-        if (!userVote) {
-          setDisplayedImage(avatar);
-        } else {
-          setDisplayedImage(userVote === "Pancakes" ? pancake : waffle);
+        // If user clicks outside, we also want to slide out the toast
+        if (switchMessage) {
+          setToastAnimation("animate-slideOut");
         }
       }
     };
@@ -182,13 +196,15 @@ const Vote = () => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [userVote]);
+  }, [switchMessage]);
 
   return (
     <section className="relative flex min-h-screen flex-col items-center justify-between bg-sage p-4 md:p-8 lg:p-16">
-      {/* Toast-like Switch Message */}
+      {/* Toast-like Switch Message with Slide In/Out */}
       {switchMessage && (
-        <div className="animate-slideIn absolute left-1/2 top-8 z-50 flex -translate-x-1/2 transform items-center rounded-md bg-blue px-4 py-2 text-sage shadow-lg transition-transform duration-300">
+        <div
+          className={`absolute left-1/2 top-8 z-50 flex -translate-x-1/2 transform items-center rounded-md bg-blue px-4 py-2 text-sage shadow-lg transition-transform duration-300 ${toastAnimation} `}
+        >
           <p className="font-sub text-sm md:text-base">{switchMessage}</p>
         </div>
       )}
