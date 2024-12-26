@@ -237,7 +237,7 @@ const Vote = () => {
         </div>
 
         {/* Vote & Revoke Buttons */}
-        <div className="mt-3 flex h-[40px] items-center space-x-4 md:mt-5">
+        <div className="mt-3 flex flex-col items-center space-y-2 md:mt-5">
           {selectedOption && (
             <button
               onClick={() => handleVote(selectedOption)}
@@ -250,7 +250,7 @@ const Vote = () => {
           {userVote && (
             <button
               onClick={handleRevokeVote}
-              className="revoke-button hover:bg-yellow-100 rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-colors duration-200 hover:opacity-100"
+              className="revoke-button hover:bg-yellow-100 transform rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-colors duration-200 hover:opacity-100"
             >
               Reset my vote!
             </button>
