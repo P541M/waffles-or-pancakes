@@ -123,13 +123,42 @@ const Vote = () => {
     }
   };
 
-  // Only reset to avatar if user hasn't voted yet.
-  // Otherwise, keep the user's existing vote as the displayed character.
+  // NEW FUNCTION: Revoke the current user’s vote
+  const handleRevokeVote = async () => {
+    if (!userVote) return; // If the user has no vote, do nothing
+
+    const userId = localStorage.getItem("userId");
+    try {
+      // POST request to revoke a user's vote
+      await axios.post(
+        "/api/revokeUserVote",
+        { userId },
+        {
+          headers: {
+            "x-api-key": apiKey,
+          },
+        },
+      );
+
+      // Reset local state
+      setUserVote(null);
+      setSelectedOption(null);
+      setDisplayedImage(avatar);
+      setSwitchMessage("");
+
+      // Refresh the overall vote counts
+      fetchVotes();
+    } catch (error) {
+      console.error("Error revoking vote", error);
+    }
+  };
+
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (
         !event.target.closest(".option-button") &&
-        !event.target.closest(".vote-button")
+        !event.target.closest(".vote-button") &&
+        !event.target.closest(".revoke-button") // exclude clicks on the revoke button
       ) {
         setSelectedOption(null);
         setSwitchMessage("");
@@ -206,14 +235,24 @@ const Vote = () => {
           </div>
         </div>
 
-        {/* Vote Button */}
-        <div className="mt-3 h-[40px] md:mt-5">
+        {/* Vote & Revoke Buttons */}
+        <div className="mt-3 flex h-[40px] items-center space-x-4 md:mt-5">
           {selectedOption && (
             <button
               onClick={() => handleVote(selectedOption)}
               className="vote-button rounded-full bg-blue px-4 py-2 font-main text-lg tracking-wider text-sage md:px-7 md:py-4 md:text-xl"
             >
               VOTE!
+            </button>
+          )}
+
+          {/* NEW: "Revoke my vote" button, visible only if user has a vote */}
+          {userVote && (
+            <button
+              onClick={handleRevokeVote}
+              className="revoke-button rounded-full bg-yellow px-4 py-2 font-main text-lg tracking-wider text-blue md:px-7 md:py-4 md:text-xl"
+            >
+              Revoke!
             </button>
           )}
         </div>
