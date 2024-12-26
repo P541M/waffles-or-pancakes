@@ -250,7 +250,7 @@ const Vote = () => {
           {userVote && (
             <button
               onClick={handleRevokeVote}
-              className="revoke-button hover:bg-yellow-100 transform rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-colors duration-200 hover:scale-105 hover:opacity-100"
+              className="revoke-button hover:bg-yellow-100 transform rounded-full bg-transparent px-2 py-1 font-main text-sm text-blue opacity-70 transition-all duration-200 hover:scale-105 hover:opacity-100"
             >
               Erase my syrup trail!
             </button>
