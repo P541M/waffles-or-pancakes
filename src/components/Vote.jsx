@@ -175,7 +175,7 @@ const Vote = () => {
   }, [userVote]);
 
   return (
-    <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 transition-all md:p-8 lg:p-16">
+    <section className="flex min-h-screen flex-col items-center justify-between bg-sage p-4 transition-all ease-in-out md:p-8 lg:p-16">
       <div className="flex flex-grow flex-col items-center justify-center">
         {/* Switch Message */}
         <div className="mb-4 h-4 md:mb-8 lg:mb-12">
